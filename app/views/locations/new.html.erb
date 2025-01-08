@@ -1,0 +1,9 @@
+<%= form_with model: @location do |form| %>
+    <%= form.label :city %>
+    <%= form.text_field :city %>
+    <%= form.label :region, "Region/State" %>
+    <%= form.text_field :region %>
+    <%= form.label :country %>
+    <%= form.text_field :country %><br>
+    <%= form.submit %>
+<% end %>
