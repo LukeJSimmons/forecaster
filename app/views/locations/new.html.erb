@@ -1,10 +1,9 @@
+<h1>New Location</h2>
 <%= form_with model: @location do |form| %>
-    <%= form.label :city, "*City" %>
-    <%= form.text_field :city %><br>
-    <%= form.label :region, "Region/State" %>
-    <%= form.text_field :region %><br>
-    <%= form.label :country, "*Country" %>
-    <%= form.text_field :country %>
+    <%= form.text_field :city, class: "form-control", placeholder: "*City" %><br>
+    <%= form.text_field :region, class: "form-control", placeholder: "Region/State" %><br>
+    <%= form.text_field :country, class: "form-control", placeholder: "*Country" %>
     <p>*required</p>
-    <%= form.submit %>
-<% end %>
+    <%= form.submit class: "btn btn-primary" %>
+<% end %><br>
+<%= link_to "Back to Locations", locations_path, class: "btn btn-secondary" %>

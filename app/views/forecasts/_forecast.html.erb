@@ -1,3 +1,5 @@
-<%= forecast.date %><br>
-<%= forecast.max_temp %><br>
-<%= forecast.min_temp %><br><br>
+<li class="list-group-item">
+    <h3><%= forecast.date.strftime("%A %b %d") %></h3>
+    <h4>High: <%= forecast.max_temp %>  |  
+    Low: <%= forecast.min_temp %></h4>
+</li>
