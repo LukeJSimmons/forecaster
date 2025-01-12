@@ -13,7 +13,7 @@ class LocationsController < ApplicationController
     @location = Location.new(location_params)
     @location.user_id = current_user.id
 
-    coordinates = parse_location(params)
+    coordinates = parse_location
 
     @location.longitude = coordinates["longt"]
     @location.latitude = coordinates["latt"]
@@ -31,15 +31,28 @@ class LocationsController < ApplicationController
 
   def show
     @location = Location.find(params[:id])
+
+    if @location.is_current_location
+      current_location = get_current_location
+      @location.update(city: current_location["city"], region: current_location["region"], country: current_location["country"])
+      coordinates = parse_location
+
+      @location.longitude = coordinates["longt"]
+      @location.latitude = coordinates["latt"]
+    end
+
+    generate_forecasts
+    generate_chart_url
+
+    @location.save
   end
 
   def index
     @locations = Location.all
 
-    unless @locations != []
-      loc = get_location
-      @location = Location.create!(city: loc["city"], region: loc["region_code"], country: loc["country"], latitude: loc["latitude"], longitude: loc["longitude"], user_id: current_user.id)
-      @locations = Location.all
+    if @locations == []
+      current_location = get_current_location
+      Location.create!(city: current_location["city"], region: current_location["region"], country: current_location["country"], user_id: current_user.id, is_current_location: true)
     end
   end
 
@@ -59,7 +72,7 @@ class LocationsController < ApplicationController
       end
     end
 
-    def parse_location(params)
+    def parse_location
       uri = URI('https://geocode.xyz')
 
       uri_params = {
@@ -74,7 +87,7 @@ class LocationsController < ApplicationController
       JSON.parse(response)
     end
 
-    def get_location
+    def get_current_location
       loc = Net::HTTP.get(URI('https://ipapi.co/json/'))
       return JSON.parse(loc)
     end
@@ -86,11 +99,15 @@ class LocationsController < ApplicationController
     
     def generate_forecasts
       weather = get_weather(@location.latitude, @location.longitude)
-
+    
       weather["daily"]["time"].each_with_index do |date, index|
-        Forecast.create!(date: date, max_temp: weather["daily"]["temperature_2m_max"][index], min_temp: weather["daily"]["temperature_2m_min"][index], location_id: @location.id)
+        forecast = @location.forecasts.find_or_initialize_by(date: date)
+        forecast.max_temp = weather["daily"]["temperature_2m_max"][index]
+        forecast.min_temp = weather["daily"]["temperature_2m_min"][index]
+        forecast.save!
       end
     end
+    
 
     def generate_chart_url
       dates = []

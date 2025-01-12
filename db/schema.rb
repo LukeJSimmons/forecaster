@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_11_200433) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_12_013226) do
   create_table "forecasts", force: :cascade do |t|
     t.date "date"
     t.float "min_temp"
@@ -31,6 +31,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_11_200433) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "chart_url"
+    t.boolean "is_current_location"
     t.index ["user_id"], name: "index_locations_on_user_id"
   end
 

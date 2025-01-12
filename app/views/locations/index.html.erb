@@ -1,6 +1,6 @@
 <ul class="list-group list-group-flush">
     <% @locations.each do |location| %>
-        <li class="list-group-item"><h2><%= link_to location.city, location %></h2></li>
+        <li class="list-group-item"><h2><%= link_to location.city, location %> <%= location.is_current_location ? "⌖" : "" %></h2></li>
     <% end %><br>
 </ul>
 <%= link_to "Add Location", new_location_path, class: "btn btn-primary" %>

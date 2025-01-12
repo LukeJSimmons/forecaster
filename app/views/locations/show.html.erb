@@ -1,5 +1,7 @@
-<h2><%= @location.city %>, <%= @location.region %>, <%= @location.country %></h2><br>
+<h2><%= @location.city %>, <%= @location.region %>, <%= @location.country %> <%= @location.is_current_location ? "⌖" : "" %></h2><br>
 <img src=<%= @location.chart_url %> /><br><br>
 
-<%= button_to "Delete Location", location_path(@location.id), method: :delete, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %><br>
-<%= link_to "Back to Locations", locations_path, class: "btn btn-secondary" %>
+<% unless @location.is_current_location %>
+    <%= button_to "Delete Location", location_path(@location.id), method: :delete, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %><br>
+<% end %>
+<%= link_to "Back to Locations", locations_path, class: "btn btn-secondary", data: { turbo_action: "replace" } %>
