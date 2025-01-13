@@ -3,15 +3,12 @@ require 'uri'
 require 'json'
 
 class LocationsController < ApplicationController
-  before_action :require_login
-
   def new
     @location = Location.new
   end
 
   def create
     @location = Location.new(location_params)
-    @location.user_id = current_user.id
 
     coordinates = parse_location
 
@@ -52,7 +49,7 @@ class LocationsController < ApplicationController
 
     if @locations == []
       current_location = get_current_location
-      Location.create!(city: current_location["city"], region: current_location["region"], country: current_location["country"], user_id: current_user.id, is_current_location: true)
+      Location.create!(city: current_location["city"], region: current_location["region"], country: current_location["country"], is_current_location: true)
     end
   end
 
@@ -64,13 +61,6 @@ class LocationsController < ApplicationController
   end
 
   private
-
-    def require_login
-      unless user_signed_in?
-        flash[:alert] = "You must be logged in to access this section."
-        redirect_to new_user_session_path
-      end
-    end
 
     def parse_location
       uri = URI('https://geocode.xyz')
@@ -124,6 +114,6 @@ class LocationsController < ApplicationController
     end
 
     def location_params
-      params.require(:location).permit(:city, :region, :country, :latitude, :longitude, :chart_url, :user_id)
+      params.require(:location).permit(:city, :region, :country, :latitude, :longitude, :chart_url)
     end
 end

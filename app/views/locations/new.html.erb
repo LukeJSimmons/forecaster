@@ -1,7 +1,13 @@
 <h1>New Location</h2>
 <%= form_with model: @location do |form| %>
+    <% @location.errors.full_messages.each do |error| %>
+        <br><h3 class="text-danger-emphasis"><%= error %></h3>
+    <% end %><br>
+    <%= form.label :city %>
     <%= form.text_field :city, class: "form-control", placeholder: "*City" %><br>
+    <%= form.label :region %>
     <%= form.text_field :region, class: "form-control", placeholder: "Region/State" %><br>
+    <%= form.label :country %>
     <%= form.text_field :country, class: "form-control", placeholder: "*Country" %>
     <p>*required</p>
     <%= form.submit class: "btn btn-primary" %>
