@@ -1,24 +1,41 @@
-# README
+# Forecaster
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## About
+A simple multi-location weather forecasting app built using Ruby on Rails.
 
-Things you may want to cover:
+## Install
 
-* Ruby version
+### Clone the repository
 
-* System dependencies
+```shell
+git clone https://github.com/LukeJSimmons/forecaster.git
+cd forecaster
+```
 
-* Configuration
+### Check your Ruby version
 
-* Database creation
+```shell
+ruby -v
+```
 
-* Database initialization
+The ouput should start with something like `ruby 2.5.1`
 
-* How to run the test suite
+If not, install the right ruby version using [rbenv](https://github.com/rbenv/rbenv) (it could take a while):
 
-* Services (job queues, cache servers, search engines, etc.)
+```shell
+rbenv install 2.5.1
+```
 
-* Deployment instructions
+### Install dependencies
 
-* ...
+Using [Bundler](https://github.com/bundler/bundler):
+
+```shell
+bundle
+```
+
+## Serve
+
+```shell
+rails s
+```
