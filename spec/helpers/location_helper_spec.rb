@@ -109,8 +109,6 @@ RSpec.describe LocationHelper, type: :helper do
 
       chart_url = generate_chart_url(location)
 
-      p chart_url
-
       expect(chart_url).to eq('https://image-charts.com/chart?cht=lc&chd=t:40.8,49.8,45.2,55.1,54.8,54.3,45.1|29.4,31.2,30.1,33.8,37.9,46.0,29.4&chl=40.8|49.8|45.2|55.1|54.8|54.3|45.1|29.4|31.2|30.1|33.8|37.9|46.0|29.4&chlps=align,50&chs=700x350&chxt=x,y&chxl=0:|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday&chdl=High|Low&chdlp=t&chco=a51d2a,0250c4')
     end
   end
