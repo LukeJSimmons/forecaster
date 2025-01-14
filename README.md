@@ -25,7 +25,7 @@ The ouput should start with something like `ruby 3.3.6`
 If not, install the right ruby version using [rbenv](https://github.com/rbenv/rbenv) (it could take a while):
 
 ```shell
-rbenv install
+rbenv install 3.3.6
 ```
 
 ### Install dependencies
