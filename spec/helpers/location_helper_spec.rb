@@ -18,7 +18,7 @@ RSpec.describe LocationHelper, type: :helper do
 
       json = parse_location(location)
 
-      expect(json["latt"]).to eq("34.72661") 
+      expect(json["latt"]).to eq("34.72661")
       expect(json["longt"]).to eq("-92.37521")
     end
   end
@@ -96,8 +96,8 @@ RSpec.describe LocationHelper, type: :helper do
           "2025-01-18",
           "2025-01-19"
         ],
-        temperature_2m_max: [40.8, 49.8, 45.2, 55.1, 54.8, 54.3, 45.1],
-        temperature_2m_min: [29.4, 31.2, 30.1, 33.8, 37.9, 46, 29.4]
+        temperature_2m_max: [ 40.8, 49.8, 45.2, 55.1, 54.8, 54.3, 45.1 ],
+        temperature_2m_min: [ 29.4, 31.2, 30.1, 33.8, 37.9, 46, 29.4 ]
       }
 
       weather[:time].each_with_index do |date, index|

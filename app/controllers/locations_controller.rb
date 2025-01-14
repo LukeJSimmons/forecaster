@@ -1,6 +1,6 @@
-require 'net/http'
-require 'uri'
-require 'json'
+require "net/http"
+require "uri"
+require "json"
 
 include LocationHelper
 
@@ -21,7 +21,7 @@ class LocationsController < ApplicationController
       generate_forecasts(@location)
       @location.chart_url = generate_chart_url(@location)
       @location.save
-      
+
       redirect_to @location
     else
       render :new, status: :unprocessable_entity
@@ -51,7 +51,7 @@ class LocationsController < ApplicationController
       current_location = get_current_location
       Location.create!(city: current_location["city"], region: current_location["region"], country: current_location["country"], is_current_location: true)
     end
-    
+
     @locations = Location.all
   end
 
