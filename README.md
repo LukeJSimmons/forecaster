@@ -1,5 +1,7 @@
 # Forecaster
 
+[Check it Out!](https://forecaster.fly.dev)
+
 ## About
 A simple multi-location weather forecasting app built using Ruby on Rails.
 
