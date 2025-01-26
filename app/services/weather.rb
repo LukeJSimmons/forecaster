@@ -1,6 +1,6 @@
-require 'uri'
-require 'net/http'
-require 'json'
+require "uri"
+require "net/http"
+require "json"
 
 class Weather < ApplicationService
   def initialize(location)
@@ -11,7 +11,7 @@ class Weather < ApplicationService
     deleted_forecasts = @location.forecasts.map do |forecast|
       forecast.delete if forecast.date < Date.new
     end
-    
+
     return if not deleted_forecasts
 
     weather = get_weather(@location.latitude, @location.longitude)

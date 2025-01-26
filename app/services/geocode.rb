@@ -1,5 +1,5 @@
-require 'uri'
-require 'net/http'
+require "uri"
+require "net/http"
 
 class Geocode < ApplicationService
   attr_reader :location

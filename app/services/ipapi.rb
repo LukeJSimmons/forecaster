@@ -1,5 +1,5 @@
-require 'json'
-require 'net/http'
+require "json"
+require "net/http"
 
 class Ipapi < ApplicationService
   def call
