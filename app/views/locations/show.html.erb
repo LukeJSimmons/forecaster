@@ -2,6 +2,7 @@
 <img src=<%= @location.chart_url %> /><br><br>
 
 <% unless @location.is_current_location %>
+    <%= link_to "Edit Location", edit_location_path(@location.id), class: "btn btn-secondary" %>
     <%= button_to "Delete Location", location_path(@location.id), method: :delete, data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %><br>
 <% end %>
 <%= link_to "Back to Locations", locations_path, class: "btn btn-secondary", data: { turbo_action: "replace" } %>

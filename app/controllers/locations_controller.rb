@@ -1,8 +1,3 @@
-require "net/http"
-require "uri"
-require "json"
-
-include LocationHelper
 
 class LocationsController < ApplicationController
   def new
@@ -12,14 +7,14 @@ class LocationsController < ApplicationController
   def create
     @location = Location.new(location_params)
 
-    coordinates = parse_location(@location)
+    coordinates = GeoCode.call(@location)
 
     @location.longitude = coordinates["longt"]
     @location.latitude = coordinates["latt"]
 
     if @location.save
-      generate_forecasts(@location)
-      @location.chart_url = generate_chart_url(@location)
+      Weather.call(@location)
+      @location.chart_url = ImageCharts.call(@location.forecasts)
       @location.save
 
       redirect_to @location
@@ -32,25 +27,25 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
 
     if @location.is_current_location
-      current_location = get_current_location
+      current_location = IPAPI.call
       @location.update(city: current_location["city"], region: current_location["region"], country: current_location["country"])
-      coordinates = parse_location(@location)
+      coordinates = GeoCode.call(@location)
 
       @location.longitude = coordinates["longt"]
       @location.latitude = coordinates["latt"]
     end
 
-    generate_forecasts(@location)
-    @location.chart_url = generate_chart_url(@location)
+    Weather.call(@location)
+    @location.chart_url = ImageCharts.call(@location.forecasts)
 
     @location.save
   end
 
   def index
-    if Location.all == []
-      current_location = get_current_location
-      Location.create!(city: current_location["city"], region: current_location["region"], country: current_location["country"], is_current_location: true)
-    end
+    current_location = IPAPI.call
+    current_location_model = Location.all.find_or_initialize_by(is_current_location: true)
+
+    current_location_model.update(city: current_location["city"], region: current_location["region"], country: current_location["country"])
 
     @locations = Location.all
   end
@@ -60,6 +55,20 @@ class LocationsController < ApplicationController
     @location.destroy
 
     redirect_to locations_path
+  end
+
+  def edit
+    @location = Location.find(params[:id])
+  end
+
+  def update
+    @location = Location.find(params[:id])
+
+    if @location.update(location_params)
+      redirect_to @location
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
