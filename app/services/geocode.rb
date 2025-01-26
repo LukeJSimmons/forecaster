@@ -22,6 +22,13 @@ class Geocode < ApplicationService
     response = Net::HTTP.get(uri)
     json = JSON.parse(response)
 
+    if json["error"]
+      uri_params["locate"] = "#{@location.city},#{@location.country}"
+      uri.query = URI.encode_www_form(uri_params)
+      response = Net::HTTP.get(uri)
+      json = JSON.parse(response)
+    end
+
     json
   end
 end
