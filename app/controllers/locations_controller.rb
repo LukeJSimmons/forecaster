@@ -9,10 +9,14 @@ class LocationsController < ApplicationController
 
     coordinates = Geocode.call(@location)
 
-    p coordinates
-
     @location.longitude = coordinates["longt"]
     @location.latitude = coordinates["latt"]
+
+    if @location.longitude == 0.0
+      @location.errors.add(:base, "Invalid location: Check your spelling or try removing the region")
+      render :new, status: :unprocessable_entity
+      return
+    end
 
     if @location.save
       Weather.call(@location)
@@ -33,8 +37,7 @@ class LocationsController < ApplicationController
       @location.update(city: current_location["city"], region: current_location["region"], country: current_location["country"])
       coordinates = Geocode.call(@location)
 
-      @location.longitude = coordinates["longt"]
-      @location.latitude = coordinates["latt"]
+      @location.update(longitude: coordinates["longt"], latitude: coordinates["latt"])
     end
 
     Weather.call(@location)
@@ -67,6 +70,12 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
 
     if @location.update(location_params)
+      coordinates = Geocode.call(@location)
+
+      @location.update(longitude: coordinates["longt"], latitude: coordinates["latt"])
+
+      @location.forecasts.destroy_all
+
       redirect_to @location
     else
       render :edit, status: :unprocessable_entity

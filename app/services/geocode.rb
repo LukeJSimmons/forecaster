@@ -20,6 +20,8 @@ class Geocode < ApplicationService
     uri.query = URI.encode_www_form(uri_params)
 
     response = Net::HTTP.get(uri)
-    JSON.parse(response)
+    json = JSON.parse(response)
+
+    json
   end
 end
