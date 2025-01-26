@@ -1,4 +1,7 @@
-class GeoCode < ApplicationService
+require 'uri'
+require 'net/http'
+
+class Geocode < ApplicationService
   attr_reader :location
 
   def initialize(location)
@@ -10,7 +13,7 @@ class GeoCode < ApplicationService
 
     uri_params = {
         "auth" => "205947941065469632418x93807 ",
-        "locate" => "#{@location.city} #{@location.country}",
+        "locate" => "#{@location.city},#{@location.region},#{@location.country}",
         "geoit" => "json"
     }
 

@@ -1,3 +1,7 @@
+require 'uri'
+require 'net/http'
+require 'json'
+
 class Weather < ApplicationService
   def initialize(location)
     @location = location

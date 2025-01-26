@@ -7,7 +7,9 @@ class LocationsController < ApplicationController
   def create
     @location = Location.new(location_params)
 
-    coordinates = GeoCode.call(@location)
+    coordinates = Geocode.call(@location)
+
+    p coordinates
 
     @location.longitude = coordinates["longt"]
     @location.latitude = coordinates["latt"]
@@ -27,9 +29,9 @@ class LocationsController < ApplicationController
     @location = Location.find(params[:id])
 
     if @location.is_current_location
-      current_location = IPAPI.call
+      current_location = Ipapi.call
       @location.update(city: current_location["city"], region: current_location["region"], country: current_location["country"])
-      coordinates = GeoCode.call(@location)
+      coordinates = Geocode.call(@location)
 
       @location.longitude = coordinates["longt"]
       @location.latitude = coordinates["latt"]
@@ -42,7 +44,7 @@ class LocationsController < ApplicationController
   end
 
   def index
-    current_location = IPAPI.call
+    current_location = Ipapi.call
     current_location_model = Location.all.find_or_initialize_by(is_current_location: true)
 
     current_location_model.update(city: current_location["city"], region: current_location["region"], country: current_location["country"])
