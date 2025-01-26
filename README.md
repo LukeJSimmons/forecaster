@@ -20,12 +20,12 @@ cd forecaster
 ruby -v
 ```
 
-The ouput should start with something like `ruby 3.3.6`
+The ouput should start with something like `ruby 3.3.4`
 
 If not, install the right ruby version using [rbenv](https://github.com/rbenv/rbenv) (it could take a while):
 
 ```bash
-rbenv install 3.3.6
+rbenv install 3.3.4
 ```
 
 ### Install dependencies
