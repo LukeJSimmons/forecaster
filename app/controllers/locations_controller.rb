@@ -13,7 +13,7 @@ class LocationsController < ApplicationController
     @location.latitude = coordinates["latt"]
 
     if @location.longitude == 0.0
-      @location.errors.add(:base, "Invalid location: Check your spelling or try removing the region")
+      @location.errors.add(:base, "Invalid location: Please input a valid location or spelling")
       render :new, status: :unprocessable_entity
       return
     end
