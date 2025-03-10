@@ -19,7 +19,7 @@ gem "jbuilder"
 
 gem "rspec-rails", "~> 7.1"
 gem "vcr", "~> 6.3", ">= 6.3.1"
-gem "webmock", "~> 3.24"
+gem "webmock", "~> 3.25"
 gem "devise", "~> 4.9", ">= 4.9.4"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
